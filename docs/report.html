@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reconciliation report — 2026-09-08</title>
+<style>
+:root {
+  color-scheme: light;
+  --plane:#f9f9f7; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e;
+  --muted:#898781; --grid:#e1e0d9; --line:#c3c2b7; --accent:#2a78d6;
+  --track:#eeedea; --ring:rgba(11,11,11,.10); --good:#006300;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --plane:#0d0d0d; --surface:#1a1a19; --ink:#fff; --ink-2:#c3c2b7;
+    --muted:#898781; --grid:#2c2c2a; --line:#383835; --accent:#3987e5;
+    --track:#252523; --ring:rgba(255,255,255,.10); --good:#0ca30c;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plane:#0d0d0d; --surface:#1a1a19; --ink:#fff; --ink-2:#c3c2b7;
+  --muted:#898781; --grid:#2c2c2a; --line:#383835; --accent:#3987e5;
+  --track:#252523; --ring:rgba(255,255,255,.10); --good:#0ca30c;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:var(--plane); color:var(--ink);
+  font:14px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+.wrap { max-width:1080px; margin:0 auto; padding-block:32px; padding-inline:20px; }
+header h1 { font-size:1.5rem; margin:0 0 4px; letter-spacing:-.01em; }
+header p { margin:0; color:var(--ink-2); }
+.meta { color:var(--muted); font-size:.8rem; margin-top:6px; }
+section { margin-top:28px; }
+h2 { font-size:1rem; margin:0 0 4px; letter-spacing:-.005em; }
+h2 + .lede { margin:0 0 14px; color:var(--ink-2); font-size:.88rem; max-width:74ch; }
+.card {
+  background:var(--surface); border:1px solid var(--ring); border-radius:12px;
+  padding:18px; overflow-x:auto;
+}
+.tiles { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); }
+.tile {
+  background:var(--surface); border:1px solid var(--ring); border-radius:12px; padding:14px 15px;
+}
+.tile__label { color:var(--muted); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+.tile__value { font-size:1.55rem; font-weight:600; margin-top:5px; letter-spacing:-.02em; }
+.tile__sub { color:var(--ink-2); font-size:.78rem; margin-top:3px; }
+.tile--good .tile__value { color:var(--good); }
+.tile--warn .tile__value { color:#d03b3b; }
+.bars { display:flex; flex-direction:column; gap:2px; }
+.bars__row {
+  display:grid; grid-template-columns:minmax(120px,1.1fr) minmax(90px,3fr) auto;
+  gap:12px; align-items:center; padding:3px 0;
+}
+.bars__row:hover { background:var(--track); border-radius:6px; }
+.bars__label { color:var(--ink-2); font-size:.82rem; display:flex; align-items:center; gap:7px; }
+.bars__track { background:var(--track); border-radius:4px; height:16px; }
+.bars__fill { height:16px; border-radius:0 4px 4px 0; background:var(--accent); }
+.bars__value { font-variant-numeric:tabular-nums; font-size:.82rem; color:var(--ink); min-width:52px; text-align:right; }
+.dot { width:9px; height:9px; border-radius:50%; display:inline-block; flex:none; }
+table { width:100%; border-collapse:collapse; font-size:.84rem; }
+th {
+  text-align:left; color:var(--muted); font-weight:500; font-size:.72rem;
+  text-transform:uppercase; letter-spacing:.05em; padding:0 10px 8px 0;
+  border-bottom:1px solid var(--grid); white-space:nowrap;
+}
+td { padding:9px 10px 9px 0; border-bottom:1px solid var(--grid); vertical-align:top; }
+.num { text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+th.num { text-align:right; }
+.mono { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:.78rem; white-space:nowrap; }
+.cat { white-space:nowrap; }
+.muted { color:var(--muted); }
+.pill {
+  display:inline-block; padding:1px 8px; border-radius:999px; font-size:.7rem;
+  border:1px solid var(--pill); color:var(--pill); text-transform:uppercase; letter-spacing:.04em;
+}
+.why ul { margin:0; padding-left:16px; color:var(--ink-2); }
+.why li { margin:1px 0; }
+.action { margin-top:6px; font-size:.82rem; }
+.cols { display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); }
+footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--grid); color:var(--muted); font-size:.78rem; }
+@media (max-width:560px) {
+  .bars__row { grid-template-columns:minmax(96px,1.2fr) 1fr auto; gap:8px; }
+  .tile__value { font-size:1.3rem; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Reconciliation report</h1>
+  <p>Internal ledger vs. settlement statements — cycle ending 2026-09-08</p>
+  <div class="meta">
+    1,337 ledger lines · 1,254 statement lines ·
+    engine ran in 51 ms · generated 2026-09-10 15:13
+  </div>
+</header>
+
+<section>
+  <div class="tiles">
+    <div class="tile"><div class="tile__label">Auto-matched</div><div class="tile__value">90.4%</div><div class="tile__sub">2,343 of 2,591 lines</div></div>
+    <div class="tile"><div class="tile__label">Auto-matched by value</div><div class="tile__value">87.2%</div><div class="tile__sub">of 1,883,744 EUR booked</div></div>
+    <div class="tile tile--good"><div class="tile__label">Match precision</div><div class="tile__value">100.00%</div><div class="tile__sub">0 false links out of 1,274</div></div>
+    <div class="tile"><div class="tile__label">Recall</div><div class="tile__value">95.4%</div><div class="tile__sub">97.0% excl. withheld by policy</div></div>
+    <div class="tile"><div class="tile__label">Exceptions</div><div class="tile__value">182</div><div class="tile__sub">78 need a human decision</div></div>
+    <div class="tile"><div class="tile__label">Value at risk</div><div class="tile__value">79,601 EUR</div><div class="tile__sub">high &amp; critical severity only</div></div>
+    <div class="tile"><div class="tile__label">Analyst time saved</div><div class="tile__value">62 h</div><div class="tile__sub">vs. clearing every line by hand</div></div>
+    <div class="tile"><div class="tile__label">Classifier accuracy</div><div class="tile__value">100.0%</div><div class="tile__sub">147/147 breaks correctly typed</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>How the cascade cleared the book</h2>
+  <p class="lede">Each pass runs only on what the previous ones could not resolve.
+  Cheap exact-key strategies clear the bulk first, so the expensive fuzzy and
+  combinatorial passes see a small, genuinely difficult residual.</p>
+  <div class="card"><div class="bars"><div class="bars__row" title="23 lines cleared in 1.6ms — 0.9% of the book cleared after this pass"><div class="bars__label">duplicate scan</div><div class="bars__track"><div class="bars__fill" style="width:1.62%"></div></div><div class="bars__value">23</div></div><div class="bars__row" title="1424 lines cleared in 7.5ms — 55.8% of the book cleared after this pass"><div class="bars__label">exact reference</div><div class="bars__track"><div class="bars__fill" style="width:100.00%"></div></div><div class="bars__value">1,424</div></div><div class="bars__row" title="64 lines cleared in 1.1ms — 58.3% of the book cleared after this pass"><div class="bars__label">canonical reference</div><div class="bars__track"><div class="bars__fill" style="width:4.49%"></div></div><div class="bars__value">64</div></div><div class="bars__row" title="124 lines cleared in 3.4ms — 63.1% of the book cleared after this pass"><div class="bars__label">amount and identity</div><div class="bars__track"><div class="bars__fill" style="width:8.71%"></div></div><div class="bars__value">124</div></div><div class="bars__row" title="120 lines cleared in 5.5ms — 67.7% of the book cleared after this pass"><div class="bars__label">fx translated</div><div class="bars__track"><div class="bars__fill" style="width:8.43%"></div></div><div class="bars__value">120</div></div><div class="bars__row" title="172 lines cleared in 8.2ms — 74.4% of the book cleared after this pass"><div class="bars__label">fee adjusted</div><div class="bars__track"><div class="bars__fill" style="width:12.08%"></div></div><div class="bars__value">172</div></div><div class="bars__row" title="265 lines cleared in 6.3ms — 84.6% of the book cleared after this pass"><div class="bars__label">batch aggregate</div><div class="bars__track"><div class="bars__fill" style="width:18.61%"></div></div><div class="bars__value">265</div></div><div class="bars__row" title="174 lines cleared in 3.7ms — 91.3% of the book cleared after this pass"><div class="bars__label">split aggregate</div><div class="bars__track"><div class="bars__fill" style="width:12.22%"></div></div><div class="bars__value">174</div></div></div></div>
+</section>
+
+<section>
+  <h2>Strategy quality</h2>
+  <p class="lede">Precision is measured per strategy against ground truth. A
+  strategy that produces false links is worse than one that produces none and
+  matches less, because a false link marks a genuine break as cleared.</p>
+  <div class="card">
+    <table>
+      <thead><tr>
+        <th>Strategy</th><th class="num">Matches</th><th class="num">Links</th>
+        <th class="num">Precision</th><th class="num">False links</th><th class="num">Value</th>
+      </tr></thead>
+      <tbody><tr><td class='cat'>exact reference</td><td class='num'>712</td><td class='num'>712</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>1,021,142 EUR</td></tr><tr><td class='cat'>fee adjusted</td><td class='num'>86</td><td class='num'>86</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>132,268 EUR</td></tr><tr><td class='cat'>batch aggregate</td><td class='num'>69</td><td class='num'>196</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>213,337 EUR</td></tr><tr><td class='cat'>amount and identity</td><td class='num'>62</td><td class='num'>62</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>75,678 EUR</td></tr><tr><td class='cat'>fx translated</td><td class='num'>60</td><td class='num'>60</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>99,086 EUR</td></tr><tr><td class='cat'>split aggregate</td><td class='num'>48</td><td class='num'>126</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>71,711 EUR</td></tr><tr><td class='cat'>canonical reference</td><td class='num'>32</td><td class='num'>32</td><td class='num'>100.00%</td><td class='num'>0</td><td class='num'>29,660 EUR</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="cols">
+    <div>
+      <h2>Exception queue</h2>
+      <p class="lede">Grouped by root cause, not by "unmatched".</p>
+      <div class="card"><div class="bars"><div class="bars__row" title="78 items · 162,605 EUR · Ambiguous — auto-matching would be a guess."><div class="bars__label">Needs Review</div><div class="bars__track"><div class="bars__fill" style="width:100.00%"></div></div><div class="bars__value">78</div></div><div class="bars__row" title="43 items · 83,404 EUR · Booked inside the SLA. Expected, no action."><div class="bars__label">In Transit</div><div class="bars__track"><div class="bars__fill" style="width:55.13%"></div></div><div class="bars__value">43</div></div><div class="bars__row" title="36 items · 42,015 EUR · Booked, past SLA, no statement line. Cash exposure."><div class="bars__label">Not Settled</div><div class="bars__track"><div class="bars__fill" style="width:46.15%"></div></div><div class="bars__value">36</div></div><div class="bars__row" title="23 items · 7,884 EUR · Same payment, materially different amount."><div class="bars__label">Amount Mismatch</div><div class="bars__track"><div class="bars__fill" style="width:29.49%"></div></div><div class="bars__value">23</div></div><div class="bars__row" title="23 items · 48,011 EUR · Statement line repeated. Withheld from matching."><div class="bars__label">Duplicate Suspected</div><div class="bars__track"><div class="bars__fill" style="width:29.49%"></div></div><div class="bars__value">23</div></div><div class="bars__row" title="22 items · 24,786 EUR · Money in with nothing to apply it to."><div class="bars__label">Unidentified Receipt</div><div class="bars__track"><div class="bars__fill" style="width:28.21%"></div></div><div class="bars__value">22</div></div></div></div>
+    </div>
+    <div>
+      <h2>Severity</h2>
+      <p class="lede">Banded on exposure in EUR, floored by category.</p>
+      <div class="card"><div class="bars"><div class="bars__row" title="high: 66 items"><div class="bars__label"><span class="dot" style="background:#ec835a"></span>high</div><div class="bars__track"><div class="bars__fill" style="width:56.90%;background:#ec835a"></div></div><div class="bars__value">66</div></div><div class="bars__row" title="medium: 116 items"><div class="bars__label"><span class="dot" style="background:#fab219"></span>medium</div><div class="bars__track"><div class="bars__fill" style="width:100.00%;background:#fab219"></div></div><div class="bars__value">116</div></div><div class="bars__row" title="info: 43 items"><div class="bars__label"><span class="dot" style="background:#2a78d6"></span>info</div><div class="bars__track"><div class="bars__fill" style="width:37.07%;background:#2a78d6"></div></div><div class="bars__value">43</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Recovery by injected scenario</h2>
+  <p class="lede">The generator knows what it created, so every break type can be
+  scored independently. Recovery is the share of settlement events fully
+  reconstructed; the last column grades the break classifier on the events that
+  are <em>meant</em> to stay unmatched.</p>
+  <div class="card">
+    <table>
+      <thead><tr>
+        <th>Scenario</th><th class="num">Events</th><th class="num">Recovered</th>
+        <th>Expected break</th><th class="num">Correctly typed</th>
+      </tr></thead>
+      <tbody><tr><td class='cat'>ambiguous cluster</td><td class='num'>48</td><td class='num'>18.8%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>amount mismatch</td><td class='num'>23</td><td class='num'>0.0%</td><td class='cat muted'>AMOUNT_MISMATCH</td><td class='num'>23/23</td></tr><tr><td class='cat'>batch settlement</td><td class='num'>69</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>clean</td><td class='num'>553</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>duplicate</td><td class='num'>23</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>duplicate extra</td><td class='num'>23</td><td class='num'>—</td><td class='cat muted'>DUPLICATE_SUSPECTED</td><td class='num'>23/23</td></tr><tr><td class='cat'>fee deducted</td><td class='num'>86</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>fx translated</td><td class='num'>60</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>in transit</td><td class='num'>43</td><td class='num'>—</td><td class='cat muted'>IN_TRANSIT</td><td class='num'>43/43</td></tr><tr><td class='cat'>not settled</td><td class='num'>36</td><td class='num'>—</td><td class='cat muted'>NOT_SETTLED</td><td class='num'>36/36</td></tr><tr><td class='cat'>reference corrupted</td><td class='num'>92</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>split settlement</td><td class='num'>48</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>timing</td><td class='num'>129</td><td class='num'>100.0%</td><td class='cat muted'></td><td class='num'>—</td></tr><tr><td class='cat'>unexpected credit</td><td class='num'>22</td><td class='num'>—</td><td class='cat muted'>UNIDENTIFIED_RECEIPT</td><td class='num'>22/22</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Top exceptions</h2>
+  <p class="lede">Ranked by severity then exposure. Every line carries the evidence
+  the engine used and the action it implies — an exception nobody can act on is
+  just a number.</p>
+  <div class="card">
+    <table>
+      <thead><tr>
+        <th>Reference</th><th>Severity</th><th>Category</th>
+        <th class="num">Amount</th><th>Why it did not match</th>
+      </tr></thead>
+      <tbody><tr class="exc"><td class="mono">X000746</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">DUPLICATE_SUSPECTED</td><td class="num">16,608 EUR</td><td class="why"><ul><li>Same reference &#x27;E302060-35&#x27;, amount 16,607.70 EUR and counterparty as X000745 booked 0d earlier</li><li>Withheld from matching so it cannot consume the genuine item&#x27;s match</li></ul><div class="action"><strong>Action:</strong> Confirm with the PSP whether X000746 is a re-post of X000745; if so, raise a reversal.</div></td></tr><tr class="exc"><td class="mono">L000973</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NEEDS_REVIEW</td><td class="num">15,829 EUR</td><td class="why"><ul><li>Several candidates scored within the ambiguity margin for 15,828.63 EUR on 2026-08-24</li><li>Auto-matching here would be a coin flip, and a wrong match would hide a genuine break behind a cleared status</li></ul><div class="action"><strong>Action:</strong> Human decision required. Adding an order/customer id to the payment reference removes this class of exception at source.</div></td></tr><tr class="exc"><td class="mono">L000972</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NEEDS_REVIEW</td><td class="num">15,829 EUR</td><td class="why"><ul><li>Several candidates scored within the ambiguity margin for 15,828.63 EUR on 2026-08-24</li><li>Auto-matching here would be a coin flip, and a wrong match would hide a genuine break behind a cleared status</li></ul><div class="action"><strong>Action:</strong> Human decision required. Adding an order/customer id to the payment reference removes this class of exception at source.</div></td></tr><tr class="exc"><td class="mono">X000900</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NEEDS_REVIEW</td><td class="num">15,829 EUR</td><td class="why"><ul><li>Several candidates scored within the ambiguity margin for 15,828.63 EUR on 2026-08-24</li><li>Auto-matching here would be a coin flip, and a wrong match would hide a genuine break behind a cleared status</li></ul><div class="action"><strong>Action:</strong> Human decision required. Adding an order/customer id to the payment reference removes this class of exception at source.</div></td></tr><tr class="exc"><td class="mono">X000899</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NEEDS_REVIEW</td><td class="num">15,829 EUR</td><td class="why"><ul><li>Several candidates scored within the ambiguity margin for 15,828.63 EUR on 2026-08-24</li><li>Auto-matching here would be a coin flip, and a wrong match would hide a genuine break behind a cleared status</li></ul><div class="action"><strong>Action:</strong> Human decision required. Adding an order/customer id to the payment reference removes this class of exception at source.</div></td></tr><tr class="exc"><td class="mono">X000781</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">DUPLICATE_SUSPECTED</td><td class="num">7,235 EUR</td><td class="why"><ul><li>Same reference &#x27;362325&#x27;, amount 7,235.01 EUR and counterparty as X000780 booked 2d earlier</li><li>Withheld from matching so it cannot consume the genuine item&#x27;s match</li></ul><div class="action"><strong>Action:</strong> Confirm with the PSP whether X000781 is a re-post of X000780; if so, raise a reversal.</div></td></tr><tr class="exc"><td class="mono">X000492</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">DUPLICATE_SUSPECTED</td><td class="num">5,859 EUR</td><td class="why"><ul><li>Same reference &#x27;INV-479964&#x27;, amount 5,858.90 EUR and counterparty as X000491 booked 1d earlier</li><li>Withheld from matching so it cannot consume the genuine item&#x27;s match</li></ul><div class="action"><strong>Action:</strong> Confirm with the PSP whether X000492 is a re-post of X000491; if so, raise a reversal.</div></td></tr><tr class="exc"><td class="mono">L000444</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">5,271 EUR</td><td class="why"><ul><li>Booked 16d ago — 13d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 5,271.32 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000699</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">4,524 EUR</td><td class="why"><ul><li>Booked 61d ago — 58d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 4,524.40 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000675</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">3,934 EUR</td><td class="why"><ul><li>Booked 24d ago — 21d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 3,933.98 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000948</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">3,255 EUR</td><td class="why"><ul><li>Booked 20d ago — 17d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 3,254.86 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000445</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">2,796 EUR</td><td class="why"><ul><li>Booked 52d ago — 49d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 2,795.65 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L001062</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">2,343 EUR</td><td class="why"><ul><li>Booked 55d ago — 52d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 2,342.79 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000946</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,815 EUR</td><td class="why"><ul><li>Booked 30d ago — 27d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,814.67 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000509</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,692 EUR</td><td class="why"><ul><li>Booked 18d ago — 15d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,691.64 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L001213</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,526 EUR</td><td class="why"><ul><li>Booked 54d ago — 51d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,526.28 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000697</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,436 EUR</td><td class="why"><ul><li>Booked 32d ago — 29d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,436.10 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000149</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,215 EUR</td><td class="why"><ul><li>Booked 40d ago — 37d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,214.58 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000010</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,133 EUR</td><td class="why"><ul><li>Booked 22d ago — 19d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,132.53 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000350</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,044 EUR</td><td class="why"><ul><li>Booked 56d ago — 53d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,044.40 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000183</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">1,003 EUR</td><td class="why"><ul><li>Booked 39d ago — 36d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 1,002.56 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000809, X000740</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">AMOUNT_MISMATCH</td><td class="num">884 EUR</td><td class="why"><ul><li>Booked 2,417.17 EUR but settled 1,532.97 EUR — short by 884.20 EUR (36.6%)</li><li>Exceeds the fee envelope of 84.60 EUR, so this is a discrepancy rather than a deduction at source</li><li>Identity confirmed at 120%</li></ul><div class="action"><strong>Action:</strong> Raise a query with the counterparty for the shortfall and hold the invoice open for the balance.</div></td></tr><tr class="exc"><td class="mono">L000986</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">884 EUR</td><td class="why"><ul><li>Booked 12d ago — 9d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 883.58 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000824</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">NOT_SETTLED</td><td class="num">856 EUR</td><td class="why"><ul><li>Booked 58d ago — 55d past the settlement SLA</li><li>No statement line and no near match on the counterparty</li><li>Cash exposure: 855.97 EUR</li></ul><div class="action"><strong>Action:</strong> Chase the counterparty and confirm the payment was actually instructed. This is the bucket where real cash goes missing.</div></td></tr><tr class="exc"><td class="mono">L000193, X000177</td><td><span class="pill" style="--pill:#ec835a">high</span></td><td class="cat">AMOUNT_MISMATCH</td><td class="num">830 EUR</td><td class="why"><ul><li>Booked 5,079.35 EUR but settled 4,248.88 EUR — short by 830.47 EUR (16.3%)</li><li>Exceeds the fee envelope of 177.78 EUR, so this is a discrepancy rather than a deduction at source</li><li>Identity confirmed at 120%</li></ul><div class="action"><strong>Action:</strong> Raise a query with the counterparty for the shortfall and hold the invoice open for the balance.</div></td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  Generated by <strong>recon-engine</strong> on synthetic data with known ground
+  truth. Precision, recall and classifier accuracy are measured against that
+  ground truth, not estimated. FX conversions use ECB euro reference rates.
+  Analyst-time savings assume 95 s to clear one line manually — substitute your
+  own figure before quoting it.
+</footer>
+
+</div>
+</body>
+</html>
