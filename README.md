@@ -2,7 +2,7 @@
 
 **Transaction reconciliation with explainable break classification — graded against ground truth, not eyeballed.**
 
-[![CI](https://github.com/OWNER/recon-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/recon-engine/actions/workflows/ci.yml)
+[![CI](https://github.com/matmat174/recon-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/matmat174/recon-engine/actions/workflows/ci.yml)
 ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)
 ![Dependencies: none](https://img.shields.io/badge/runtime%20dependencies-none-brightgreen)
 ![License: MIT](https://img.shields.io/badge/license-MIT-lightgrey)
@@ -59,7 +59,7 @@ ambiguity margin of each other, it refuses to guess and escalates instead.
 No dependencies, no install, no network.
 
 ```bash
-git clone https://github.com/OWNER/recon-engine && cd recon-engine
+git clone https://github.com/matmat174/recon-engine && cd recon-engine
 PYTHONPATH=src python3 -m recon demo      # -> docs/report.html
 ```
 
